@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
+import Square from "./Square";
 
 function Game() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const defaultValue = Array(9).fill(null);
+  const [squares, setSquares] = useState(defaultValue);
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
 
   //Declaring a Winner
   useEffect(() => {
-    "Your code here";
+    setWinner(calculateWinner(squares));
   }, [squares]);
 
   //function to check if a player has won.
@@ -40,12 +42,19 @@ function Game() {
 
   //Handle player
   const handleClick = (i) => {
-    "Your code here";
+    if (winner) return;
+    if (squares[i]) return;
+    let newsquares = [...squares];
+    newsquares[i] = xIsNext ? "X" : "O";
+    setSquares(newsquares);
+    setXIsNext((oldValue) => {
+      return !oldValue;
+    });
   };
 
   //Restart game
   const handlRestart = () => {
-    "Your code here";
+    setSquares(defaultValue);
   };
 
   return (
@@ -53,9 +62,9 @@ function Game() {
       <h2 className="result">Winner is: {winner ? winner : "N/N"}</h2>
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
-        <Board squares={"Your code here"} handleClick={"Your code here"} />
+        <Board squares={squares} handleClick={handleClick} />
       </div>
-      <button onClick={"Your code here"} className="restart-btn">
+      <button onClick={handlRestart} className="restart-btn">
         Restart
       </button>
     </div>
