@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
-import Square from "./Square";
 
 function Game() {
   const defaultValue = Array(9).fill(null);
